@@ -28,7 +28,7 @@ You can clone the project from the [repository](https://github.com/JanInquisitor
 
 Once you have the project on your machine you can run it with node.
 ```bash
-    node index.js
+    node server.js
 ```
 
 ## Contributing
