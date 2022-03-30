@@ -1,8 +1,34 @@
-const {v1: uuidv1} = require('uuid')
+const crypto = require("crypto");
 const util = require('util');
 
 const data = require('../utils/dataHandlers')
 const catchAsync = require('../utils/catchAsync')
+
+
+// Utility
+createRandomString = function (strLength) {
+    strLength = typeof strLength == "number" && strLength > 0 ? strLength : false;
+    if (strLength) {
+        // Define all the possible characters that could go into a string.
+        let possibleCharacters =
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+        // Start the final string
+        let str = "";
+        for (i = 1; i <= strLength; i++) {
+            // Get random character from possibleCharacters string
+            let randomCharacter = possibleCharacters.charAt(
+                Math.floor(Math.random() * possibleCharacters.length)
+            );
+            // Append this character to the final string
+            str += randomCharacter;
+        }
+
+        return str;
+    } else {
+        return false;
+    }
+};
 
 exports.getAllNotes = catchAsync(async (req, res, next) => {
     res.json(data.readJSON('db', 'db'))
@@ -25,7 +51,7 @@ exports.createNote = catchAsync(async (req, res, next) => {
     if (!title || !text) throw new Error("Either the title or the text is missing.")
 
     // Create a new object by merging the req.body object with a new id object.
-    newNote = Object.assign(req.body, {id: uuidv4()})
+    newNote = Object.assign(req.body, {id: createRandomString(16)})
 
     // Reads the existing notes array from the database and converts it from a literal string to a JavaScript array.
     notesArray = JSON.parse(data.read('db', 'db'))
