@@ -1,4 +1,4 @@
-const {v4: uuidv4} = require('uuid')
+const {v1: uuidv1} = require('uuid')
 const util = require('util');
 
 const data = require('../utils/dataHandlers')
