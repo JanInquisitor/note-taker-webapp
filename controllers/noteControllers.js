@@ -1,4 +1,4 @@
-const uuid = require('uuid')
+const {v4: uuidv4} = require('uuid')
 const util = require('util');
 
 const data = require('../utils/dataHandlers')
@@ -25,7 +25,7 @@ exports.createNote = catchAsync(async (req, res, next) => {
     if (!title || !text) throw new Error("Either the title or the text is missing.")
 
     // Create a new object by merging the req.body object with a new id object.
-    newNote = Object.assign(req.body, {id: uuid.v1()})
+    newNote = Object.assign(req.body, {id: uuidv4()})
 
     // Reads the existing notes array from the database and converts it from a literal string to a JavaScript array.
     notesArray = JSON.parse(data.read('db', 'db'))
